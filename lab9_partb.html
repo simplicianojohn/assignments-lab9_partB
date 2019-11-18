@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+
+    <p>How many buttons to create?</p>
+    <input id="createbutton" type="text">
+    <button id="button" type="button">Go!</button>
+
+    <script>
+        let array = []
+        let numbutton = document.getElementById("createbutton").value
+        let initial_top = 100
+        let initial_left = 0
+        let initial_click = 1
+
+
+        function check() {
+            let numbutton = document.getElementById("createbutton").value
+            if ((numbutton < 5 | numbutton > 100) | isNaN(numbutton) == true) {
+                window.alert('please input a number between 5 and 100')
+            } if (numbutton >= 5 && numbutton <= 100) {
+                create_buttons(numbutton)
+            }
+        }
+
+
+        function button(color, width, height, top, left, order, id) {
+            this.btn = document.createElement("button");
+            this.btn.style.backgroundColor = color;
+            this.btn.style.width = width;
+            this.btn.style.height = height;
+            this.btn.id = id;
+            this.btn.style.position = "absolute";
+            this.btn.onclick = function() {
+                if (initial_click == id) {
+                    initial_click += 1
+                    if (initial_click == array.length +1 ){
+                        window.alert('ALL CORRECT')
+                    }
+
+
+                } else {
+                    initial_click = 1
+                    window.alert('wrong!')
+                }
+            }
+            document.body.appendChild(this.btn)
+            this.setLocation = function (top, left) {
+                this.btn.style.top = top;
+                this.btn.style.left = left;
+            }
+            this.setLocation(top, left)
+            console.log(array)
+        }
+
+
+        function create_buttons(numbutton) {
+            for (num = 1; num <= numbutton; num++) {
+                array.push(new button(random_color(), "120px", "60px", initial_top + 'px', add_left(num) + 'px', 0, num))
+            }
+            setTimeout(yes, 5000)
+        }
+
+
+        function add_left(num) {
+            if (num == 1) {
+                initial_left = 0
+                return initial_left
+            }
+            else {
+                initial_left += 125
+                return initial_left
+            }
+        }
+
+
+        function random_color() {
+            r = Math.floor(Math.random() * 255);
+            g = Math.floor(Math.random() * 255);
+            b = Math.floor(Math.random() * 255);
+            colors = 'rgb('+ r + ', ' + g + ', ' + b + ')'
+            return colors
+        }
+
+
+        function random(a, b) {
+            if (a < b) {
+                num1 = a
+                num2 = b
+            } else {
+                num1 = b
+                num2 = a
+            }
+            if (num1 < 0) {
+                number = (num1)
+            }
+            number = (num1 + (num2 - num1) * Math.random())
+            return number
+        }
+
+
+        function mover() {
+            for (i = 0; i <= array.length; i++)
+                array[i].setLocation(
+                    Math.floor(Math.random() * height) + "px",
+                    Math.floor(Math.random() * width) + "px");
+        }
+
+
+        function getsize() {
+            width = window.innerWidth - 120
+            height = window.innerHeight - 60
+        }
+
+
+        function yes() {
+            mover()
+        }
+
+
+        setInterval(getsize, 1)
+        document.getElementById("button").onclick = check
+    </script>
+</body>
+
+</html>
